@@ -9,9 +9,18 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "typecheck": "astro check",
+    "test": "vitest run"
   },
   "dependencies": {
     "astro": "^7.4.12"
-  }
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "cookie": "^2.0.2",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.0"
+  },
+  "packageManager": "pnpm@12.21.0"
 }
