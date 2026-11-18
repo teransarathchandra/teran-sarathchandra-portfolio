@@ -33,11 +33,11 @@ A personal developer portfolio that reads as designed by a person, not generated
 - [ ] AC-5: One crafted Three.js object whose rotation/form follows scroll progress through the sections; `three` loads only after first paint (not in the initial JS chunk); a static image is shown when WebGL is unavailable or motion is reduced; renderer pauses when off-screen - check: `pnpm e2e e2e/three.spec.ts && pnpm exec vitest run tests/bundle.test.ts`
 - [ ] AC-6: About and experience timeline (TIQRI, Softlogic Life, Scienter Technologies) rendered from typed content data in `src/content/`, with role, dates and 2-4 impact points each - check: `pnpm e2e e2e/sections.spec.ts`
 - [ ] AC-7: GitHub data is fetched at build time (public, non-fork repos: name, description, language, stars, updated date, URL) using `GITHUB_TOKEN` when set; a committed snapshot `src/data/github.json` is used when the API fails, so the build never breaks offline - check: `pnpm exec vitest run tests/github.test.ts`
-- [ ] AC-8: Selected work section on the home page mixes CV projects and GitHub repos, linking to case studies and repos - check: `pnpm e2e e2e/sections.spec.ts`
+- [ ] AC-8: Selected work section on the home page mixes CV projects with the three featured repos (`jira-mcp-server`, `coachline`, `agent-skills`, in that order), linking to case studies and repos - check: `pnpm e2e e2e/sections.spec.ts`
 - [ ] AC-9: Case studies at `/work/<slug>/` for at least 3 flagship projects (Classroom Observation PWA, jira-delivery-mcp, coachline, Kubernetes scheduler research), each with problem, constraints, approach, outcome and stack - check: `pnpm e2e e2e/case-studies.spec.ts`
-- [ ] AC-10: Blog: `/writing/` index and post pages from an Astro content collection (Markdown/MDX), sorted by date, with an RSS feed at `/rss.xml` and at least one real seed post - check: `pnpm build && pnpm exec vitest run tests/blog.test.ts`
+- [ ] AC-10: Blog: `/writing/` index and post pages from an Astro content collection (Markdown/MDX), sorted by date, with an RSS feed at `/rss.xml` and the seed post "Offline-first without double submits" (see Decisions) - check: `pnpm build && pnpm exec vitest run tests/blog.test.ts`
 - [ ] AC-11: Skills, IEEE publication (with DOI link 10.1109/ICCCI70321.2026.11666506), education and certifications are present - check: `pnpm e2e e2e/sections.spec.ts`
-- [ ] AC-12: Contact: mailto link, copy-email button with visible and announced feedback, LinkedIn and GitHub links, and a CV PDF in `public/` that downloads - check: `pnpm e2e e2e/contact.spec.ts`
+- [ ] AC-12: Contact: mailto link, copy-email button with visible and announced feedback, LinkedIn and GitHub links, and a CV PDF in `public/` that downloads and contains no phone number - check: `pnpm e2e e2e/contact.spec.ts`
 - [ ] AC-13: Light theme by default, dark theme toggle that persists, follows `prefers-color-scheme` only when no choice is stored, and has no flash of the wrong theme on load - check: `pnpm e2e e2e/theme.spec.ts`
 - [ ] AC-14: Accessibility: zero serious or critical axe violations on every page, skip link, visible focus, full keyboard navigation, semantic landmarks - check: `pnpm e2e e2e/a11y.spec.ts`
 - [ ] AC-15: Anti-slop audit: a `hallmark` audit pass reports no slop findings, and an automated guard bans known tells (purple/indigo gradient hero, emoji icons, "passionate", "cutting-edge", "leverage", "seamless", lorem ipsum, default Inter-only type, identical 3-card grids) - check: `pnpm exec vitest run tests/slop.test.ts`
@@ -55,8 +55,8 @@ A personal developer portfolio that reads as designed by a person, not generated
 - Long repo descriptions and empty descriptions render cleanly.
 - Mobile Safari: no scroll jank, no 100vh jumps (`svh`/`dvh`), no horizontal overflow.
 
-## Open questions
-- CV PDF: export the DOCX to PDF without the phone number, or keep it? (Default: remove the phone number.)
-- Which 3-4 GitHub repos to pin as featured (default: jira-mcp-server, coachline, agent-skills, EV-Charging-Station-Booking-System)?
-- Seed blog post topic (default: building jira-delivery-mcp, or offline sync with Dexie and Azure append blobs).
-- Headshot photo: use one or not?
+## Decisions (2026-11-18)
+- CV PDF: exported from the DOCX with the phone number removed (email, LinkedIn, GitHub stay). Served from `public/` and linked as the CV download.
+- Featured GitHub repos (exactly these three, in this order): `jira-mcp-server`, `coachline`, `agent-skills`. Other public repos appear only in an "all repos" list, if at all.
+- Seed blog post: "Offline-first without double submits": how the observation PWA stores work in IndexedDB (Dexie), syncs on reconnect, logs offline events to Azure append blobs with de-duplication, and uses HTTP 409 to stop duplicate submissions. The client stays unnamed ("a US national education nonprofit"), with no internal code, data or screenshots.
+- Headshot: none in v1. The 3D object is the visual anchor. The About section renders an optional portrait only if `src/assets/headshot.(jpg|webp)` exists; absent, the layout must still look intentional, not like a missing image.
